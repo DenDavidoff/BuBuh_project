@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}График{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>График доходов и расходов</h1>
+        <img src="data:image/png;base64,{{ graphic }}" alt="График доходов и расходов" class="img-fluid"/>
+    </div>
+</div>
+{% endblock %}

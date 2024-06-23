@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mb-4">Документация</h2>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Основные инструкции</h3>
+            </div>
+            <div class="card-body">
+                <p>Для того, чтобы воспользоваться приложением необходимо воспользоваться следующими инструкциями:</p>
+                <ol>
+                    <li><strong>Шаг 1:</strong> Зарегестрируйтесь. Сделать это можно, нажав кнопку <a class="text-primary" href="{% url 'users:signup' %}">"Регистрация"</a> в правом верхнем углу</li>
+                    <li><strong>Шаг 2:</strong> После регистрации авторизуйтесь, нажав <a class="text-primary" href="{% url 'users:login' %}">"Войти"</a> в правом верхнем углу</li>
+                    <li><strong>Шаг 3:</strong> После авторизации нажмите <a class="text-primary" href="{% url 'home' %}">"Бухгалтерия"</a></li>
+                    <li><strong>Шаг 4:</strong> Для добавления записи нажмите <span class="btn btn-success mm-4">Добавить запись</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Ресурсы и ссылки</h3>
+            </div>
+            <div class="card-body">
+                <p>Для получения дополнительной информации и поддержки вы можете воспользоваться следующими ресурсами:</p>
+                <ul>
+                    <li><a href="#">Официальная документация проекта</a></li>
+                    <li><a href="#">Форум поддержки пользователей</a></li>
+                    <li><a href="#">Часто задаваемые вопросы (FAQ)</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>Дополнительные материалы</h3>
+            </div>
+            <div class="card-body">
+                <p>Здесь можно разместить дополнительные материалы, например, видеоуроки, инструкции по настройке или примеры использования.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

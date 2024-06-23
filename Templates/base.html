@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}BuBuh - приложение домашней бухгалтерии{% endblock %}
+    </title>
+
+    <!-- Подключим BS5 из CDN -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+
+
+    {% block head %} {% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    
+    <!-- Блок header -->
+    <header>
+        <div class="container">
+          {% include "nav.html" %}
+        </div>
+    </header>
+
+
+    <!-- Блок контента -->
+    <main class="flex-shrink-0">
+        <div class="container mt-3">
+            {% block content %} {% endblock %}
+        </div>
+    </main>
+
+    
+    <!-- Блок footer -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            {% block footer %}
+                {% include 'footer.html' %}
+            {% endblock %}
+        </div>
+    </footer>
+
+
+    <!-- Подключим BS5 из CDN -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <script>
+        const createdAtUTC = "2024-06-21T12:34:56Z";
+        const localTime = moment.utc(createdAtUTC).local().format('YYYY-MM-DD HH:mm:ss');
+        console.log(localTime); // Отобразить в локальном времени
+    </script>
+
+
+</body>
+</html>

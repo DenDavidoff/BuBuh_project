@@ -1,0 +1,5 @@
+
+.d-flex.align-items-end {
+    display: flex;
+    align-items: flex-end;
+}

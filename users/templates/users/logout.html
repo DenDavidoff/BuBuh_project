@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<p>Спасибо, что посетили нас сегодня</p>
+
+<p><a href="{% url 'users:login' %}">Войти снова</a></p>
+
+{% endblock %}

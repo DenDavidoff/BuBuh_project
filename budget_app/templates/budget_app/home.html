@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+  <h2 class="mb-4">Ваши записи</h2>
+
+  <!-- Форма с фильтрами -->
+  <form method="get" class="row mb-4">
+    <div class="col-md-3">
+      {{ date_range_form.start_date|as_crispy_field|safe }}
+    </div>
+    <div class="col-md-3">
+      {{ date_range_form.end_date|as_crispy_field|safe }}
+    </div>
+    <div class="col-md-2">
+      <label for="min_amount" class="form-label">Минимальная сумма</label>
+      <input type="number" id="min_amount" name="min_amount" class="form-control" placeholder="Минимальная сумма" value="{{ request.GET.min_amount }}">
+    </div>
+    <div class="col-md-2">
+      <label for="max_amount" class="form-label">Максимальная сумма</label>
+      <input type="number" id="max_amount" name="max_amount" class="form-control" placeholder="Максимальная сумма" value="{{ request.GET.max_amount }}">
+    </div>
+    <div class="col-md-2">
+      <label for="category" class="form-label">Категория</label>
+      <select name="category" class="form-select">
+        <option value="">Все категории</option>
+        <option value="income" {% if request.GET.category == 'income' %}selected{% endif %}>Доход</option>
+        <option value="expense" {% if request.GET.category == 'expense' %}selected{% endif %}>Расход</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="description" class="form-label">Описание</label>
+      <input type="text" id="description" name="description" class="form-control" placeholder="Описание" value="{{ request.GET.description }}">
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary w-100">Фильтр</button>
+    </div>
+  </form>
+
+  <!-- Быстрые фильтры -->
+  <div class="btn-group mb-4" role="group" aria-label="Quick Filters">
+    <a href="?filter=this_month" class="btn btn-outline-primary">Этот месяц</a>
+    <a href="?filter=last_7_days" class="btn btn-outline-primary">Последние 7 дней</a>
+    <a href="?filter=today" class="btn btn-outline-primary">Сегодня</a>
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">Сбросить фильтры</a>
+  </div>
+
+
+  <!-- Баланс -->
+  <h4>Баланс: 
+    {% if balance >= 0 %}
+      <span class="text-success">{{ balance }} рублей</span>
+    {% else %}
+      <span class="text-primary">{{ balance }} рублей</span>
+    {% endif %}
+  </h4>
+
+  <!-- Таблица записей -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"><a href="?{% if request.GET.sort_by == 'date' and request.GET.order == 'asc' %}sort_by=date&order=desc{% else %}sort_by=date&order=asc{% endif %}">Дата</a></th>
+        <th scope="col"><a href="?{% if request.GET.sort_by == 'category' and request.GET.order == 'asc' %}sort_by=category&order=desc{% else %}sort_by=category&order=asc{% endif %}">Категория</a></th>
+        <th scope="col"><a href="?{% if request.GET.sort_by == 'amount' and request.GET.order == 'asc' %}sort_by=amount&order=desc{% else %}sort_by=amount&order=asc{% endif %}">Сумма</a></th>
+        <th scope="col">Описание</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+        <tr>
+          <td>{{ record.date|date:"d.m.Y H:i:s" }}</td>
+          <td>{{ record.get_category_display }}</td>
+          <td>{{ record.amount }}</td>
+          <td>{{ record.description }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Пагинация -->
+  {% with request.GET.urlencode as query_string %}
+  <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mt-4">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+          {% endif %}
+          {% for num in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+              <a class="page-link" href="?page={{ num }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}">{{ num }}</a>
+          </li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+          {% endif %}
+      </ul>
+  </nav>
+  {% endwith %}
+  
+
+  <!-- Кнопки для добавления записи и экспорта данных -->
+  <a href="{% url 'add_record' %}" class="btn btn-success mt-4">Добавить запись</a>
+  <a href="{% url 'export_to_csv' %}" class="btn btn-info mt-4">Экспорт в CSV</a>
+  <a href="{% url 'export_chart' %}" class="btn btn-info mt-4">Показать график</a>
+{% endblock %}

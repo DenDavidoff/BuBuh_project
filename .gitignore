@@ -1,0 +1,12 @@
+BuBuh/__pycache__
+budget_app/__pycache__
+budget_app/migrations/__pycache__
+users/__pycache__
+users/migrations/__pycache__
+venv/
+.venv
+.venv/
+.env
+docker-compose.yml
+Dockerfile
+TODO
