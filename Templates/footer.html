@@ -1,32 +1,76 @@
 <footer class="bg-light text-primary py-4 mt-auto">
-    <div class="container">
+  <div class="container-fluid">
       <div class="row">
-        <div class="col-md-4 mb-3">
-          <h5>Меню</h5>
-          <ul class="list-unstyled">
-            <li><a href="{% url 'main' %}" class="text-primary">Главная</a></li>
-            <li><a href="{% url 'about' %}" class="text-primary">О проекте</a></li>
-            <li><a href="{% url 'documentation' %}" class="text-primary">Документация</a></li>
-          </ul>
-        </div>
-        <div class="col-md-4 mb-3">
-          <h5>Контакты</h5>
-          <ul class="list-unstyled">
-            <li>Адрес: ул. Пример, 123</li>
-            <li>Телефон: +1 (234) 567-89-00</li>
-            <li>Email: example@example.com</li>
-        </div>
-        <div class="col-md-4 mb-3">
-          <h5>Связь с нами</h5>
-          <a href="#" class="text-primary me-2"><i class="bi bi-telegram"></i> TG</a>
-          <a href="#" class="text-primary"><i class="bi bi-github"></i> Github</a>
-        </div>
+          <!-- Меню для десктопной версии -->
+          <div class="col-md-4 mb-3 d-none d-md-block">
+              <h5>Меню</h5>
+              <ul class="list-unstyled">
+                  <li><a href="{% url 'main' %}" class="text-primary">Главная</a></li>
+                  <li><a href="{% url 'about' %}" class="text-primary">О проекте</a></li>
+                  <li><a href="{% url 'documentation' %}" class="text-primary">Документация</a></li>
+              </ul>
+          </div>
+          <!-- Меню для мобильной версии -->
+          <div class="col-12 mb-3 d-md-none text-center">
+              <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footerMenu" aria-controls="footerMenu" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse" id="footerMenu">
+                  <ul class="navbar-nav">
+                      <li class="nav-item"><a href="{% url 'main' %}" class="nav-link text-primary">Главная</a></li>
+                      <li class="nav-item"><a href="{% url 'about' %}" class="nav-link text-primary">О проекте</a></li>
+                      <li class="nav-item"><a href="{% url 'documentation' %}" class="nav-link text-primary">Документация</a></li>
+                  </ul>
+              </div>
+          </div>
+          <!-- Контакты -->
+          <div class="col-md-4 mb-3 d-none d-md-block">
+              <h5>Контакты</h5>
+              <ul class="list-unstyled">
+                  <li>Адрес: ул. Пример, 123</li>
+                  <li>Телефон: +1 (234) 567-89-00</li>
+                  <li>Email: example@example.com</li>
+              </ul>
+          </div>
+          <!-- Связь с нами -->
+          <div class="col-md-4 mb-3 text-center text-md-start">
+              <h5>Связь с нами</h5>
+              <a href="https://t.me/dendavi" class="text-primary me-2" target="_blank"><i class="bi bi-telegram"></i> TG</a>
+              <a href="https://github.com/DenDavidoff/BuBuh_project" class="text-primary" target="_blank"><i class="bi bi-github"></i> Github</a>
+          </div>
       </div>
-      <div class="row mt-4">
-        <div class="col text-center">
-          <p class="mb-0">&copy; 2024 BuBuh. Все права защищены.</p>
-        </div>
+      <div class="row">
+          <div class="col text-center">
+              <p class="mb-0">&copy; 2024 BuBuh. Все права защищены.</p>
+          </div>
       </div>
-    </div>
-  </footer>
-  
+  </div>
+</footer>
+
+<!-- Добавляем стили -->
+<style>
+  .custom-toggler {
+      background-color: #d9230f;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto; /* Центрирование по горизонтали */
+  }
+  .custom-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      width: 30px;
+      height: 30px;
+  }
+  @media (max-width: 575.98px) {
+      footer .container-fluid {
+          padding-left: 10px;
+          padding-right: 10px;
+      }
+  }
+</style>

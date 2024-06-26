@@ -12,6 +12,12 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 
+    <!-- Подключим moment.js из CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <!-- Подключаем локализацию для русского языка -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ru.min.js"></script>
+
 
     {% block head %} {% endblock %}
 </head>
@@ -52,12 +58,21 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+
+    <!-- Скрипт для отображения локального времени -->
     <script>
-        const createdAtUTC = "2024-06-21T12:34:56Z";
-        const localTime = moment.utc(createdAtUTC).local().format('YYYY-MM-DD HH:mm:ss');
-        console.log(localTime); // Отобразить в локальном времени
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Устанавливаем локализацию на русский
+            moment.locale('ru');
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const timestamps = document.querySelectorAll('.timestamp');
+
+            timestamps.forEach(timestamp => {
+                const utcDateStr = timestamp.getAttribute('data-utc');
+                const localDate = moment.utc(utcDateStr).tz(userTimezone);
+                timestamp.textContent = localDate.format('DD.MM.YYYY HH:mm:ss');
+            });
+        });
     </script>
 
 

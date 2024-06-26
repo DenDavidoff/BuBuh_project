@@ -6,37 +6,50 @@
   <h2 class="mb-4">Ваши записи</h2>
 
   <!-- Форма с фильтрами -->
-  <form method="get" class="row mb-4">
-    <div class="col-md-3">
-      {{ date_range_form.start_date|as_crispy_field|safe }}
+  <div class="accordion mb-4" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Фильтры
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <form method="get" class="row mb-4">
+            <div class="col-md-3">
+              {{ date_range_form.start_date|as_crispy_field|safe }}
+            </div>
+            <div class="col-md-3">
+              {{ date_range_form.end_date|as_crispy_field|safe }}
+            </div>
+            <div class="col-md-2">
+              <label for="min_amount" class="form-label">Минимальная сумма</label>
+              <input type="number" id="min_amount" name="min_amount" class="form-control" placeholder="Минимальная сумма" value="{{ request.GET.min_amount }}">
+            </div>
+            <div class="col-md-2">
+              <label for="max_amount" class="form-label">Максимальная сумма</label>
+              <input type="number" id="max_amount" name="max_amount" class="form-control" placeholder="Максимальная сумма" value="{{ request.GET.max_amount }}">
+            </div>
+            <div class="col-md-2">
+              <label for="category" class="form-label">Категория</label>
+              <select name="category" class="form-select">
+                <option value="">Все категории</option>
+                <option value="income" {% if request.GET.category == 'income' %}selected{% endif %}>Доход</option>
+                <option value="expense" {% if request.GET.category == 'expense' %}selected{% endif %}>Расход</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="description" class="form-label">Описание</label>
+              <input type="text" id="description" name="description" class="form-control" placeholder="Описание" value="{{ request.GET.description }}">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary w-100">Фильтр</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="col-md-3">
-      {{ date_range_form.end_date|as_crispy_field|safe }}
-    </div>
-    <div class="col-md-2">
-      <label for="min_amount" class="form-label">Минимальная сумма</label>
-      <input type="number" id="min_amount" name="min_amount" class="form-control" placeholder="Минимальная сумма" value="{{ request.GET.min_amount }}">
-    </div>
-    <div class="col-md-2">
-      <label for="max_amount" class="form-label">Максимальная сумма</label>
-      <input type="number" id="max_amount" name="max_amount" class="form-control" placeholder="Максимальная сумма" value="{{ request.GET.max_amount }}">
-    </div>
-    <div class="col-md-2">
-      <label for="category" class="form-label">Категория</label>
-      <select name="category" class="form-select">
-        <option value="">Все категории</option>
-        <option value="income" {% if request.GET.category == 'income' %}selected{% endif %}>Доход</option>
-        <option value="expense" {% if request.GET.category == 'expense' %}selected{% endif %}>Расход</option>
-      </select>
-    </div>
-    <div class="col-md-3">
-      <label for="description" class="form-label">Описание</label>
-      <input type="text" id="description" name="description" class="form-control" placeholder="Описание" value="{{ request.GET.description }}">
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <button type="submit" class="btn btn-primary w-100">Фильтр</button>
-    </div>
-  </form>
+  </div>
 
   <!-- Быстрые фильтры -->
   <div class="btn-group mb-4" role="group" aria-label="Quick Filters">
@@ -69,7 +82,7 @@
     <tbody>
       {% for record in records %}
         <tr>
-          <td>{{ record.date|date:"d.m.Y H:i:s" }}</td>
+          <td class="timestamp" data-utc="{{ record.date|date:'Y-m-d\TH:i:s\Z' }}">{{ record.date|date:"d.m.Y H:i:s" }}</td>
           <td>{{ record.get_category_display }}</td>
           <td>{{ record.amount }}</td>
           <td>{{ record.description }}</td>

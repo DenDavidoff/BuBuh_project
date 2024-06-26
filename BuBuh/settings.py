@@ -87,6 +87,8 @@ WSGI_APPLICATION = 'BuBuh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',   # Используется PostgreSQL
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'bubuh.db',
         # 'NAME': BASE_DIR / 'db.sql',
         'NAME': 'BuBuh', # Имя базы данных
         'USER': 'postgres', # Имя пользователя
@@ -162,3 +164,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Подключение поддержки локализации времени
 # USE_L10N = True
 # USE_TZ = True
+
+# Сброс паролей через почту
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+SERVER_EMAIL = os.getenv('EMAIL_HOST_USER')
+EMAIL_ADMIN = os.getenv('EMAIL_HOST_USER')

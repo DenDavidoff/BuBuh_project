@@ -16,9 +16,9 @@
         </ul>
         <ul class="navbar-nav d-flex align-items-center"> <!-- Элементы правой части без выравнивания по левому краю -->
           {% if user.is_authenticated %}
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="/admin/">Админка</a>
-          </li>
+          </li> {% endcomment %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'users:profile' %}">Привет, {{ user.username }}!</a>
           </li>
@@ -29,9 +29,9 @@
             </form>
           </li>
           {% else %}
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="/admin/">Админка</a>
-          </li>
+          </li> {% endcomment %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
           </li>

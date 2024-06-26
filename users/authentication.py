@@ -34,7 +34,7 @@ class EmailAuthBackend(BaseBackend):
         except user_model.MultipleObjectsReturned:
             return None
         
-        # def get_user - это метод, который возвращает пользователя по его идентификатору
+    # def get_user - это метод, который возвращает пользователя по его идентификатору
     def get_user(self, user_id):
         user_model = get_user_model()
         try:
