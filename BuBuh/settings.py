@@ -90,10 +90,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'bubuh.db',
         # 'NAME': BASE_DIR / 'db.sql',
-        'NAME': 'BuBuh', # Имя базы данных
-        'USER': 'postgres', # Имя пользователя
-        'PASSWORD': 'root', # Пароль пользователя
-        'HOST': 'localhost', # Наименование контейнера для базы данных в Docker Compose
+        'NAME': 'default_db', # Имя базы данных
+        'USER': 'gen_user', # Имя пользователя
+        'PASSWORD': '1nd\L#sB<a^7aK', # Пароль пользователя
+        'HOST': '192.168.0.4', # Наименование контейнера для базы данных в Docker Compose
         'PORT': '5432',  # Порт базы данных
     }
 }
