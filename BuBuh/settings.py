@@ -84,7 +84,19 @@ WSGI_APPLICATION = 'BuBuh.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = os.getenv('DB')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',   # Используется PostgreSQL
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'bubuh.db',
+        # 'NAME': BASE_DIR / 'db.sql',
+        'NAME': os.getenv('NAME'), # Имя базы данных
+        'USER': os.getenv('USER'), # Имя пользователя
+        'PASSWORD': os.getenv('PASSWORD'), # Пароль пользователя
+        'HOST': os.getenv('HOST'), # Наименование контейнера для базы данных в Docker Compose
+        'PORT': os.getenv('PORT'),  # Порт базы данных
+    }
+}
 
 
 # Password validation
