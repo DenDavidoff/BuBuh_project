@@ -29,7 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['bubuh.online', 'www.bubuh.online', 'localhost', '127.0.0.1', '0.0.0.0']
+
+CSRF_TRUSTED_ORIGINS = ['https://bubuh.online', 'https://www.bubuh.online']
 
 
 # Application definition
