@@ -89,9 +89,6 @@ WSGI_APPLICATION = 'BuBuh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',   # Используется PostgreSQL
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'bubuh.db',
-        # 'NAME': BASE_DIR / 'db.sql',
         'NAME': os.getenv('NAME'), # Имя базы данных
         'USER': os.getenv('USER'), # Имя пользователя
         'PASSWORD': os.getenv('PASSWORD'), # Пароль пользователя
@@ -162,10 +159,6 @@ AUTHENTICATION_BACKENDS = [
 # Подключение crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-# Подключение поддержки локализации времени
-# USE_L10N = True
-# USE_TZ = True
 
 # Сброс паролей через почту
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

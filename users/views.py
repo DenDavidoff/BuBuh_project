@@ -10,9 +10,6 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileUserForm, UserPasswordChangeForm
 
-# from django.contrib.auth import logout
-
-# from cards.models import Card
 # Create your views here.
 
 class LoginUser(MenuMixin, LoginView):
@@ -26,13 +23,9 @@ class LoginUser(MenuMixin, LoginView):
             return self.request.POST.get('next')
         return reverse_lazy('main')
 
+
 class LogoutUser(MenuMixin, LogoutView):
     next_page = reverse_lazy('users:login')
-
-# def logout_view(request):
-#     logout(request)
-#     # Redirect to a success page.
-#     return render(request, 'users/logout.html')
 
 
 class RegisterUser(CreateView):

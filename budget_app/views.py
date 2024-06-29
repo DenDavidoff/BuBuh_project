@@ -183,18 +183,22 @@ class ExportCSVView(LoginRequiredMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
+        # Получение данных пользователя
         user = request.user
         records = Record.objects.filter(user=user).order_by("-date")
 
+        # Настройка HTTP-ответа
         response = HttpResponse(content_type="text/csv; charset=utf-8")
         response.write(
             "\ufeff".encode("utf8")
-        )  # Включение BOM для корректной кодировки
+        )  # Добавляем BOM (Byte Order Mark) для корректного отображения кириллических символов в CSV-файле
         response["Content-Disposition"] = 'attachment; filename="records.csv"'
 
+        # Создание CSV-писателя и запись заголовков
         writer = csv.writer(response, delimiter=';')
         writer.writerow(['Дата', 'Категория', 'Сумма', 'Описание'])
 
+        # Запись данных в CSV-файл
         for record in records:
             writer.writerow([
                 localtime(record.date).strftime('%Y-%m-%d %H:%M:%S'),
@@ -212,9 +216,11 @@ class ExportChartView(MenuMixin, LoginRequiredMixin, ContextMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
+        # Получение данных пользователя
         user = request.user
         records = Record.objects.filter(user=user).order_by("date")
 
+        # Фильтрация данных
         income_dates = records.filter(category="income").values_list("date", flat=True)
         income_amounts = records.filter(category="income").values_list(
             "amount", flat=True
@@ -227,6 +233,7 @@ class ExportChartView(MenuMixin, LoginRequiredMixin, ContextMixin, View):
             "amount", flat=True
         )
 
+        # Построение графика
         plt.figure(figsize=(10, 5))
         plt.plot(income_dates, income_amounts, label="Доходы", color="green")
         plt.plot(expense_dates, expense_amounts, label="Расходы", color="red")
@@ -236,6 +243,7 @@ class ExportChartView(MenuMixin, LoginRequiredMixin, ContextMixin, View):
         plt.legend()
         plt.grid(True)
 
+        # Сохранение графика в буфер
         buffer = io.BytesIO()
         plt.savefig(buffer, format="png")
         buffer.seek(0)
@@ -245,9 +253,11 @@ class ExportChartView(MenuMixin, LoginRequiredMixin, ContextMixin, View):
         # Закрытие графика
         plt.close()
 
+        # Преобразование изображения в Base64
         graphic = base64.b64encode(image_png)
         graphic = graphic.decode("utf-8")
 
+        # Добавление изображения в контекст и рендеринг шаблона
         context = self.get_context_data()
         context["graphic"] = graphic
 
@@ -256,6 +266,7 @@ class ExportChartView(MenuMixin, LoginRequiredMixin, ContextMixin, View):
     def get_context_data(self, **kwargs):
         """
         Добавление данных в контекст шаблона.
+        Этот метод расширяет контекст шаблона, добавляя в него меню, полученное с помощью метода 'get_menu'
         """
         context = super().get_context_data(**kwargs)
         context["menu"] = self.get_menu()
